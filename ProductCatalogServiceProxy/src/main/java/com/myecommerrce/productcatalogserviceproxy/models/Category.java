@@ -1,4 +1,4 @@
 package com.myecommerrce.productcatalogserviceproxy.models;
 
-public class Catalog {
+public class Category {
 }
