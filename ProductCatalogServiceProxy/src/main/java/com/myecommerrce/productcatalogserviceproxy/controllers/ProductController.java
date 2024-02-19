@@ -19,4 +19,9 @@ public class ProductController {
     public String createProduct(@RequestBody ProductDto productDto){
         return "Creating Product : " + productDto ;
     }
+
+    @PatchMapping("/prodcuts")
+    public String updateProduct(@RequestBody ProductDto productDto){
+        return "Updating Product : " + productDto;
+    }
 }
