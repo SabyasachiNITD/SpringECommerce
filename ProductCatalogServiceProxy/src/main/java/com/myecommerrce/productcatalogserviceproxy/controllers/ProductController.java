@@ -1,10 +1,14 @@
 package com.myecommerrce.productcatalogserviceproxy.controllers;
 
 import com.myecommerrce.productcatalogserviceproxy.dtos.ProductDto;
+import com.myecommerrce.productcatalogserviceproxy.services.IProductService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class ProductController {
+    IProductService productService ;
+    
+
     @GetMapping("/products")
     public String getProducts(){
         return "Returning list of all the products" ;

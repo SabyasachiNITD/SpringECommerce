@@ -9,9 +9,11 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ProductDto {
+    private String id;
     private String title;
     private String description;
-    private String imageUrl;
+    private String image;
     private Double price;
-    private Category category;
+    private String category;
+    private RatingDto ratingDto;
 }
