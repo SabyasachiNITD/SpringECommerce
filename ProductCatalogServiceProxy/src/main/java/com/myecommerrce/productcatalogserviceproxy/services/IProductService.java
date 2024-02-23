@@ -1,11 +1,14 @@
 package com.myecommerrce.productcatalogserviceproxy.services;
 
 import com.myecommerrce.productcatalogserviceproxy.dtos.ProductDto;
+import com.myecommerrce.productcatalogserviceproxy.models.Product;
+
+import java.util.List;
 
 public interface IProductService {
-    String getProducts();
+    List<Product> getProducts();
 
-    String getProduct(String productId);
+    Product getProduct(Long productId);
 
     String createProduct(ProductDto productDto);
 

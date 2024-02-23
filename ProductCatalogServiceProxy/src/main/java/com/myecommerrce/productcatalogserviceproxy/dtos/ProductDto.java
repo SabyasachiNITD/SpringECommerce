@@ -9,7 +9,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ProductDto {
-    private String id;
+    private Long id;
     private String title;
     private String description;
     private String image;

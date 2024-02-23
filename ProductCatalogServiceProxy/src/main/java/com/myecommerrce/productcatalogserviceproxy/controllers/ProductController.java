@@ -1,30 +1,48 @@
 package com.myecommerrce.productcatalogserviceproxy.controllers;
 
 import com.myecommerrce.productcatalogserviceproxy.dtos.ProductDto;
+import com.myecommerrce.productcatalogserviceproxy.models.Product;
 import com.myecommerrce.productcatalogserviceproxy.services.IProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@RequestMapping("/products")
 @RestController
 public class ProductController {
+    @Autowired
     IProductService productService ;
     
 
-    @GetMapping("/products")
-    public String getProducts(){
-        return "Returning list of all the products" ;
+    @GetMapping("")
+    public List<Product> getProducts(){
+        List<Product> products = productService.getProducts();
+        //return "Returning list of all the products" ;
+        return products;
     }
 
-    @GetMapping("/products/{id}")
-    public String getProduct(@PathVariable("id") String productId){
-        return "Return the product with id: " + productId ;
+    @GetMapping("{id}")
+    public ResponseEntity<Product> getProduct(@PathVariable("id") Long productId){
+        try {
+            if (productId < 1 || productId>20)
+                throw new IllegalArgumentException("Product id is Incorrect");
+            Product product = productService.getProduct(productId);
+            return new ResponseEntity<>(product, HttpStatus.OK);
+        }
+        catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    @PostMapping("/products")
+    @PostMapping("")
     public String createProduct(@RequestBody ProductDto productDto){
         return "Creating Product : " + productDto ;
     }
 
-    @PatchMapping("/prodcuts")
+    @PatchMapping("")
     public String updateProduct(@RequestBody ProductDto productDto){
         return "Updating Product : " + productDto;
     }
