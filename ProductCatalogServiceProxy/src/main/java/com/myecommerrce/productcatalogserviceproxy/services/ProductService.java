@@ -4,6 +4,7 @@ import com.myecommerrce.productcatalogserviceproxy.dtos.ProductDto;
 import com.myecommerrce.productcatalogserviceproxy.models.Category;
 import com.myecommerrce.productcatalogserviceproxy.models.Product;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -38,8 +39,10 @@ public class ProductService implements IProductService {
         return getProductFromProductDto(productDto);
     }
     @Override
-    public String createProduct(ProductDto productDto){
-        return null;
+    public Product createProduct(ProductDto productDto){
+        RestTemplate restTemplate = restTemplateBuilder.build();
+        ResponseEntity<ProductDto> responseEntity = restTemplate.postForEntity("http://fakestoreapi.com/products", productDto,ProductDto.class);
+        return getProductFromProductDto(responseEntity.getBody());
     }
     @Override
     public String updateProduct(ProductDto productDto){

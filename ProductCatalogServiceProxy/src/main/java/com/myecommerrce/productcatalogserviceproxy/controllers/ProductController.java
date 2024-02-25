@@ -27,7 +27,7 @@ public class ProductController {
     @GetMapping("{id}")
     public ResponseEntity<Product> getProduct(@PathVariable("id") Long productId){
         try {
-            if (productId < 1 || productId>20)
+            if (productId < 1 || productId>50)
                 throw new IllegalArgumentException("Product id is Incorrect");
             Product product = productService.getProduct(productId);
             return new ResponseEntity<>(product, HttpStatus.OK);
@@ -38,8 +38,8 @@ public class ProductController {
     }
 
     @PostMapping("")
-    public String createProduct(@RequestBody ProductDto productDto){
-        return "Creating Product : " + productDto ;
+    public Product createProduct(@RequestBody ProductDto productDto){
+        return productService.createProduct(productDto);
     }
 
     @PatchMapping("")
