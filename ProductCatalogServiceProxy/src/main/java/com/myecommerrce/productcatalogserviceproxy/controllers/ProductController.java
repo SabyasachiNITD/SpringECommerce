@@ -1,6 +1,7 @@
 package com.myecommerrce.productcatalogserviceproxy.controllers;
 
 import com.myecommerrce.productcatalogserviceproxy.dtos.ProductDto;
+import com.myecommerrce.productcatalogserviceproxy.models.Category;
 import com.myecommerrce.productcatalogserviceproxy.models.Product;
 import com.myecommerrce.productcatalogserviceproxy.services.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,11 +40,25 @@ public class ProductController {
 
     @PostMapping("")
     public Product createProduct(@RequestBody ProductDto productDto){
-        return productService.createProduct(productDto);
+        Product product = getProduct(productDto);
+        return productService.createProduct(product);
     }
 
-    @PatchMapping("")
-    public String updateProduct(@RequestBody ProductDto productDto){
-        return "Updating Product : " + productDto;
+    @PatchMapping("{id}")
+    public Product updateProduct(@PathVariable Long id,@RequestBody Product product){
+        return product;
+    }
+
+    private Product getProduct(ProductDto productDto){
+        Product product = new Product();
+        product.setTitle(productDto.getTitle());
+        product.setDescription(productDto.getDescription());
+        product.setPrice(productDto.getPrice());
+        product.setImageUrl(productDto.getImage());
+//        Category category = new Category();
+//        category.setName(productDto.getCategory());
+//        product.setCategory(category);
+        product.setId(productDto.getId());
+        return product;
     }
 }
