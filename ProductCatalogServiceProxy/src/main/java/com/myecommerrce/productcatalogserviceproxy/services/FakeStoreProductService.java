@@ -1,14 +1,11 @@
 package com.myecommerrce.productcatalogserviceproxy.services;
 
+import com.myecommerrce.productcatalogserviceproxy.clients.fakestore.client.FakeStoreApiClient;
 import com.myecommerrce.productcatalogserviceproxy.clients.fakestore.dtos.FakeStoreProductDto;
-import com.myecommerrce.productcatalogserviceproxy.dtos.ProductDto;
-import com.myecommerrce.productcatalogserviceproxy.models.Category;
 import com.myecommerrce.productcatalogserviceproxy.models.Product;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -17,9 +14,10 @@ import java.util.List;
 @Service
 public class FakeStoreProductService implements IProductService {
     private RestTemplateBuilder restTemplateBuilder;
-
-    public FakeStoreProductService(RestTemplateBuilder restTemplateBuilder){
+    private FakeStoreApiClient fakeStoreApiClient;
+    public FakeStoreProductService(RestTemplateBuilder restTemplateBuilder,FakeStoreApiClient fakeStoreApiClient){
         this.restTemplateBuilder = restTemplateBuilder;
+        this.fakeStoreApiClient = fakeStoreApiClient;
     }
 
     @Override
@@ -35,11 +33,9 @@ public class FakeStoreProductService implements IProductService {
     }
     @Override
     public Product getProduct(Long productId){
-
-        RestTemplate restTemplate = restTemplateBuilder.build();
-        // getForEntity also provides a ResposeEntity ---- we just get the body of the Entity
-        FakeStoreProductDto fakeStoreProductDtoproductDto = restTemplate.getForEntity("https://fakestoreapi.com/products/{id}", FakeStoreProductDto.class, productId).getBody();
-        return getProductFromFakeProductDto(fakeStoreProductDtoproductDto);
+        FakeStoreProductDto fakeStoreProductDto = fakeStoreApiClient.getProduct(productId);
+        Product product = getProductFromFakeProductDto(fakeStoreProductDto);
+        return product;
     }
     @Override
     public Product createProduct(Product product){
