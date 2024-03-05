@@ -55,9 +55,9 @@ public class ProductController {
         product.setDescription(productDto.getDescription());
         product.setPrice(productDto.getPrice());
         product.setImageUrl(productDto.getImage());
-//        Category category = new Category();
-//        category.setName(productDto.getCategory());
-//        product.setCategory(category);
+        Category category = new Category();
+        category.setName(productDto.getCategory());
+        product.setCategory(category);
         product.setId(productDto.getId());
         return product;
     }
