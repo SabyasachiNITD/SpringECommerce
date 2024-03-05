@@ -40,15 +40,14 @@ public class FakeStoreProductService implements IProductService {
     @Override
     public Product createProduct(Product product){
         FakeStoreProductDto fakeStoreProductDto = getFakeStoreProductDtoFromProduct(product);
-        FakeStoreProductDto responseProducFromProductDto = fakeStoreApiClient.createProduct(fakeStoreProductDto);
-        return getProductFromFakeProductDto(responseProducFromProductDto);
+        FakeStoreProductDto responseFakeStoreProducFromFakeStoreClient = fakeStoreApiClient.createProduct(fakeStoreProductDto);
+        return getProductFromFakeProductDto(responseFakeStoreProducFromFakeStoreClient);
     }
     @Override
     public Product updateProduct(Long id,Product product){
-        RestTemplate restTemplate = restTemplateBuilder.build();
-        FakeStoreProductDto fakeStoreProductDto = restTemplate.patchForObject("https://fakestoreapi.com/{id}", product, FakeStoreProductDto.class,id);
-        Product resultantProduct = getProductFromFakeProductDto(fakeStoreProductDto);
-        return resultantProduct;
+        FakeStoreProductDto fakeStoreProductDto = getFakeStoreProductDtoFromProduct(product);
+        FakeStoreProductDto responseFakeStoreProductFromFakeStoreClient = fakeStoreApiClient.updateProduct(id,fakeStoreProductDto);
+        return getProductFromFakeProductDto(responseFakeStoreProductFromFakeStoreClient);
     }
 
     private Product getProductFromFakeProductDto(FakeStoreProductDto productDto){

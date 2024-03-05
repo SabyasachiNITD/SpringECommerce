@@ -30,5 +30,9 @@ public class FakeStoreApiClient {
         ResponseEntity<FakeStoreProductDto> fakeStoreResponseEntity = restTemplate.postForEntity("http://fakestoreapi.com/products", fakeStoreProductDto,FakeStoreProductDto.class);
         return fakeStoreResponseEntity.getBody();
     }
-
+    public FakeStoreProductDto updateProduct(Long productId,FakeStoreProductDto fakeStoreProductDto){
+        RestTemplate restTemplate = restTemplateBuilder.build();
+        FakeStoreProductDto resultantFakeStoreProductDto = restTemplate.patchForObject("https://fakestoreapi.com/{id}",fakeStoreProductDto,FakeStoreProductDto.class,productId);
+        return resultantFakeStoreProductDto;
+    }
 }

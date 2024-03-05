@@ -34,7 +34,7 @@ public class ProductController {
             return new ResponseEntity<>(product, HttpStatus.OK);
         }
         catch(Exception e){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            throw e;
         }
     }
 
@@ -61,4 +61,10 @@ public class ProductController {
         product.setId(productDto.getId());
         return product;
     }
+
+//    @ExceptionHandler({IllegalArgumentException.class, NullPointerException.class})
+//    public ResponseEntity<String> invalidIdException(){
+//        return new ResponseEntity<String>("Product Id Galat Hai", HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
+
 }
